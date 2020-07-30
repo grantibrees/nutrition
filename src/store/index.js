@@ -19,7 +19,8 @@ export default new Vuex.Store({
     activeFood: [],
     brandedResults: [],
     commonResults: [],
-    trackedFoods: []
+    brandedTrackedFoods: [],
+    commonTrackedFoods: [],
   },
   mutations: {
     setActiveFood(state, activeFood) {
@@ -31,9 +32,12 @@ export default new Vuex.Store({
     setCommonResults(state, commonResults) {
       state.commonResults = commonResults
     },
-    setTrackedFoods(state, trackedFoods) {
-      state.trackedFoods = trackedFoods
+    setBrandedTrackedFoods(state, brandedTrackedFoods) {
+      state.brandedTrackedFoods.unshift(brandedTrackedFoods)
     },
+    setCommonTrackedFoods(state, commonTrackedFoods) {
+      state.commonTrackedFoods.unshift(commonTrackedFoods)
+    }
   },
   actions: {
     // SECTION Search Results
@@ -42,8 +46,16 @@ export default new Vuex.Store({
       console.log(res);
       commit("setBrandedResults", res.data.branded)
       commit("setCommonResults", res.data.common)
+    },
+
+    moveFoodItemToTracker({commit, dispatch}, payload) {
+     if (payload.type == "branded"){
+      commit("setBrandedTrackedFoods", payload.data)
+     } else {
+      commit("setCommonTrackedFoods", payload.data)
+     }
     }
   },
   modules: {
-  }
+  },
 })

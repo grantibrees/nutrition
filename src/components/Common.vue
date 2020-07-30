@@ -3,6 +3,7 @@
     <h3>{{foodData.food_name}}</h3>
     <h3>{{foodData.serving_qty}} {{foodData.serving_unit}}</h3>
     <img class="img-thumbnail" :src="foodData.photo.thumb" />
+    <button class="btn btn-block btn-success" @click="moveFoodItemToTracker">Track Food</button>
   </div>
 </template>
 <script>
@@ -22,7 +23,7 @@ export default {
   */,
   methods: {
     moveFoodItemToTracker() {
-      this.$store.state.trackedFoods.push(this.foodData);
+      this.$store.dispatch("moveFoodItemToTracker", { data: this.foodData, type: "common" })
     },
   } /* Functions that DO things, Commit and Dispatch */,
   components: {} /* Pulls a components file as a child to reference. Often like a for A=[]\
